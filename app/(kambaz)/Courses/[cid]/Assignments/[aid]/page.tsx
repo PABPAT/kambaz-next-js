@@ -3,11 +3,13 @@ export default function AssignmentEditor() {
     <div id="wd-assignments-editor">
       <label htmlFor="wd-name">Assignment Name</label>
       <input id="wd-name" defaultValue="A1 - ENV + HTML" /><br /><br />
-      <textarea id="wd-description">
-        The assignment is available online Submit a link to the landing page of
-      </textarea>
+      <textarea
+        id="wd-description"
+        defaultValue="The assignment is available online. Submit a link to the landing page of"
+        />
       <br />
       <table>
+        <tbody>
         <tr>
           <td align="right" valign="top">
             <label htmlFor="wd-points">Points</label>
@@ -17,24 +19,29 @@ export default function AssignmentEditor() {
             </td>
         </tr>
         <tr>
-            <label  id="wd-assignment-grp"> Assignment Group </label>
-            <select id="wd-select-one-assignment-grp">
+            <td>
+            <label  htmlFor="wd-assignment-grp"> Assignment Group </label>
+            <select id="wd-assignment-grp">
                 <option value="ASSIGNMENT">Assignment</option>
                 <option value="QUIZ">Quiz</option>
                 <option value="PROJECT">Project</option>
             </select>
+            </td>
         </tr>
         <tr>
-            <label  id="wd-display-grd"> Display Grade </label>
-            <select id="wd-select-one-display-grd">
+            <td>
+            <label  htmlFor="wd-display-grd"> Display Grade </label>
+            <select id="wd-display-grd">
                 <option value="PERCENTAGE">Percentage</option>
                 <option value="TOTAL MARKS">Total Marks</option>
                 <option value="GPA">GPA</option>
             </select>
+            </td>
         </tr>
         <tr>
-            <label  id="wd-submission-type"> Submission Type </label>
-            <select id="wd-select-one-submission-type">
+            <td>
+            <label  htmlFor="wd-submission-type"> Submission Type </label>
+            <select id="wd-submission-type">
                 <option value="ONLINE">Percentage</option>
                 <option value="OFFLINE">Online</option>
             </select>
@@ -55,30 +62,40 @@ export default function AssignmentEditor() {
                 <input type="checkbox" name="check-genre" id="wd-chkbox-file_uploads"/>
                 <label htmlFor="wd-chkbox-fantasy">File Uploads</label>
             </div>
+            </td>
         </tr>
         <tr>
-            <label  id="wd-assign-grp"> Assign to </label>
-            <input type="text" placeholder="Everyone"></input>
+            <td>
+            <label  htmlFor="wd-assign-grp"> Assign to </label>
+            <input id="wd-assign-grp" type="text" placeholder="Everyone"></input>
+            </td>
         </tr>
         <tr>
+            <td>
             <label htmlFor="wd-text-fields-due"> Due </label>
             <input type="date" id="wd-text-fields-due"/><br/>
+            </td>
         </tr>
         <tr>
+            <td>
             <label htmlFor="wd-text-fields-available-from"> Availale from </label>
             <input type="date" id="wd-text-fields-available-from"/><br/>
+            </td>
         </tr>
         <tr>
+            <td>
             <label htmlFor="wd-text-fields-until"> Until </label>
             <input type="date" id="wd-text-fields-until"/><br/>
+            </td>
         </tr>
-        <footer className="footer"> 
+        </tbody>
+      </table>
+      <footer className="footer"> 
             <hr className="footer-line"></hr>
         </footer>
         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
         <button type="submit" style={{margin: "5px"}}>Cancel</button>
         <button type="submit" style={{margin: "5px"}}>Save</button>
         </div>
-      </table>
     </div>
 );}
