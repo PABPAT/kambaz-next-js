@@ -5,5 +5,7 @@ export default function AccountNavigation() {
      <Link href="Signin"> Signin </Link> <br />
      <Link href="Signup"> Signup </Link> <br />
      <Link href="Profile"> Profile </Link> <br />
+     <h3>Poorna Abhijith Patel</h3>
+     <a href="https://github.com/PABPAT">GitHub Link</a>
    </div>
 );}

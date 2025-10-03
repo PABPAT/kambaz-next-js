@@ -139,7 +139,7 @@ tag to tell browsers to render the gaps.
                     <label htmlFor="wd-text-fields-username">Username:</label>
                     <input placeholder="jdoe" id="wd-text-fields-username" /> <br />
                     <label htmlFor="wd-text-fields-password">Password:</label>
-                    <input type="password" value="123@#$asd" id="wd-text-fields-password" />
+                    <input type="password" defaultValue="123@#$asd" id="wd-text-fields-password" />
                     <br />
                     <label htmlFor="wd-text-fields-first-name">First name:</label>
                     <input type="text" title="John" id="wd-text-fields-first-name" /> <br />
