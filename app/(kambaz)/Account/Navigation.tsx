@@ -3,9 +3,7 @@ export default function AccountNavigation() {
  return (
    <div id="wd-account-navigation">
      <Link href="Signin"> Signin </Link> <br />
-     <Link href="Signup"> Signup </Link> <br />
-     <Link href="Profile"> Profile </Link> <br />
-     <h3>Poorna Abhijith Patel</h3>
-     <a href="https://github.com/PABPAT">GitHub Link</a>
+     <Link href="Signup" className="text-danger"> Signup </Link> <br />
+     <Link href="Profile" className="text-danger"> Profile </Link> <br />
    </div>
 );}
