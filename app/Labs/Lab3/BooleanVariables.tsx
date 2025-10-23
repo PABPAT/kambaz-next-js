@@ -3,10 +3,10 @@ let true1 = true, false1 = false;
 let false2 = true1 && false1;
 let true2 = true1 || false1;
 let true3 = !false2;
-let true4 = numberVariable === 123; // always use === not ==
+let true4 = numberVariable === 123;
 let true5 = floatingPointNumber !== 321.432;
 let false3 = numberVariable < 100;
-export default function BooleanVariables() {
+export default function () {
     return (
   <div id="wd-boolean-variables">
     <h4>Boolean Variables</h4>
