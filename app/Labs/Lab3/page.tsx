@@ -61,7 +61,6 @@ export default function Lab3() {
       <Spreader />
       <Destructing />
       <FunctionDestructing />
-      {/*<Math />*/}
       <DestructingImports />
       <Classes />
       <Styles />
