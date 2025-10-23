@@ -22,12 +22,15 @@ export default function ModulesControls() {
          <DropdownItem id="wd-publish-modules-only">
            <GreenCheckmark /> Publish modules only
          </DropdownItem>
-         <DropdownItem id="wd-unpublish-all-modules-and-items">
-            <GreenCheckmark /> Unpublish all modules and items
-         </DropdownItem>
          <DropdownItem id="wd-unpublish-modules-only">
             <GreenCheckmark /> Unpublish modules only
          </DropdownItem>
+         <DropdownItem id="wd-unpublish-all-modules-and-items">
+            <GreenCheckmark /> Unpublish all modules and items
+         </DropdownItem>
+        <DropdownItem id="wd-unpublish-all">
+            <GreenCheckmark /> Unpublish All
+        </DropdownItem>
        </DropdownMenu>
      </Dropdown>
      <Button variant ="secondary" size="lg" className="me-1 float-end" id="wd-view-progress-btn">View Progress</Button>

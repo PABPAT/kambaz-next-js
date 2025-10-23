@@ -1,7 +1,12 @@
+"use client"
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { useParams } from 'next/navigation';
+import * as db from "../../../../Database";
+import { Link } from 'react-bootstrap-icons';
 export default function AssignmentEditorPage() {
+  const { cid, aid } = useParams();
+  const assignment = db.assignments.find((a:any) => a._id === aid);
   return (
     <div id="wd-assignments-editor" className="container mt-4">
       <form>
@@ -10,7 +15,7 @@ export default function AssignmentEditorPage() {
           <input
             type="text"
             id="wd-name"
-            defaultValue="A1 - ENV + HTML"
+            value={assignment?.title ?? ""}
             className="form-control"/>
         </div>
         <div className="mb-3">
@@ -18,7 +23,7 @@ export default function AssignmentEditorPage() {
           <textarea
             id="wd-description"
             rows={3}
-            defaultValue="The assignment is available online Submit a link to the landing page of"
+            defaultValue={"The assignment is available online Submit a link to the landing page of"}
             className="form-control">
           </textarea>
         </div>
@@ -88,11 +93,11 @@ export default function AssignmentEditorPage() {
           <div className="row">
             <div className="col-12 col-md-4 mb-3 mb-md-0">
               <label htmlFor="wd-text-fields-due" className="form-label">Due</label>
-              <input type="date" id="wd-text-fields-due" className="form-control" />
+              <input type="datetime-local" id="wd-text-fields-due" className="form-control" defaultValue='2024-05-06T11:59'/>
             </div>
             <div className="col-12 col-md-4 mb-3 mb-md-0">
               <label htmlFor="wd-text-fields-available-from" className="form-label">Available from</label>
-              <input type="date" id="wd-text-fields-available-from" className="form-control" />
+              <input type="datetime-local" id="wd-text-fields-available-from" className="form-control" defaultValue='2024-05-15T11:59' />
             </div>
             <div className="col-12 col-md-4">
               <label htmlFor="wd-text-fields-until" className="form-label">Until</label>
@@ -100,12 +105,12 @@ export default function AssignmentEditorPage() {
             </div>
           </div>
         </div>
-        <hr className="footer-line" />
-        <div className="d-flex flex-column flex-md-row justify-content-end">
-          <button type="button" className="btn btn-secondary me-md-2 mb-2 mb-md-0">Cancel</button>
-          <button type="submit" className="btn btn-danger">Save</button>
+        <hr />
+         <div className="d-flex flex-column flex-md-row justify-content-end">
+          <a className="btn btn-secondary me-md-2 mb-2 mb-md-0" href={`/Courses/${cid}/Assignments`}>Cancel</a>
+          <a className="btn btn-danger me-md-2 mb-2 mb-md-0" href={`/Courses/${cid}/Assignments`}>Save</a>
         </div>
-      </form>
+        </form>
     </div>
   );
 }
