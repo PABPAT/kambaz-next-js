@@ -1,15 +1,28 @@
-"use client"
+"use client";
 import Link from "next/link";
 import GreenCheckmark from "../Modules/GreenCheckmark";
 import { BsGripVertical } from "react-icons/bs";
-import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { IoEllipsisVertical } from "react-icons/io5";
-import { FaRegEdit } from "react-icons/fa";
-import * as db from "../../../Database";
-import { useParams } from "next/navigation";
+import { FaRegEdit, FaTrash } from "react-icons/fa";
+import { useParams, useRouter } from "next/navigation";
+import { deleteAssignment } from "./reducer";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../../store";
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { assignments } = useSelector((state: RootState) => state.assignmentReducer);
+
+  const deleteAssignmentById = (id: string) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this assignment?");
+    if (confirmDelete) {
+      dispatch(deleteAssignment(id));
+    } else {
+      return;
+    }
+  }
   return (
     <div id="wd-assignment-list">
       <div id="wd-assignments" className="d-flex justify-content-between align-items-center mb-3">
@@ -27,7 +40,7 @@ export default function Assignments() {
           <button id="wd-add-assignment-group" className="btn btn-secondary me-2">
             + Group
           </button>
-          <button id="wd-add-assignment" className="btn btn-danger">
+          <button id="wd-add-assignment" className="btn btn-danger" onClick={() => router.push(`/Courses/${cid}/Assignments/new`)}>
             + Assignment
           </button>
         </div>
@@ -55,27 +68,35 @@ export default function Assignments() {
             >
               <div className="d-flex align-items-start flex-grow-1">
                 <BsGripVertical className="me-3 mt-1 text-muted" />
-                <FaRegEdit className="me-3 mt-1 text-success" />
-                <div className="flex-grow-1">
-                  <Link 
-                    href={`/Courses/${cid}/Assignments/${assignment._id}`}
-                    className="fw-bold text-decoration-none text-dark"
-                  >
-                    {assignment._id} - {assignment.title}
-                  </Link>
-                  <div className="text-muted small mt-1">
-                    <span className="text-danger">Multiple Modules</span> |{" "}
-                    <span className="fw-bold">Not available until</span> May 6 at 12:00am |{" "}
-                    <span className="fw-bold">Due</span> May 13 at 11:59pm | 100 pts
+                  <div className="flex-grow-1 me-3">
+                    <Link 
+                      href={`/Courses/${cid}/Assignments/${assignment._id}`}
+                      className="fw-bold text-decoration-none text-dark"
+                    >
+                      {assignment.title}
+                    </Link>
+                    <div className="text-muted small mt-1">
+                      <span className="text-danger">Multiple Modules</span> |{" "}
+                      <span className="fw-bold">Not available until</span> May 6 at 12:00am |{" "}
+                      <span className="fw-bold">Due</span> May 13 at 11:59pm | 100 pts
+                    </div>
                   </div>
-                </div>
               </div>
+              <div className="d-flex align-items-center">
+                <FaRegEdit className="me-3 mt-1 text-success" 
+                style = {{cursor: "pointer"}}
+                onClick={() => router.push(`/Courses/${cid}/Assignments/${assignment._id}`)}/>
+                <FaTrash className="me-3 mt-1 text-danger"
+                style = {{cursor: "pointer"}}
+                onClick={() => deleteAssignmentById(assignment._id)}/>
               <div className="d-flex align-items-center">
                 <GreenCheckmark />
                 <IoEllipsisVertical className="ms-2" />
               </div>
+            </div>
             </ListGroupItem>
-          ))}
+          ))
+          }
       </ListGroup>
     </div>
   );

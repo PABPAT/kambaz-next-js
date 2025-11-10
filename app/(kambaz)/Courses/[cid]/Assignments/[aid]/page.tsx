@@ -1,12 +1,87 @@
 "use client"
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useParams } from 'next/navigation';
-import * as db from "../../../../Database";
-import { Link } from 'react-bootstrap-icons';
+import { v4 as uuidv4 } from 'uuid';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { addAssignment, updateAssignment} from "../reducer";
+import { useSelector } from 'react-redux';
+import { RootState} from '../../../../store';
+interface Assignnment {
+  _id: string;
+  title: string;
+  description: string;
+  points: number;
+  dueDate: string;
+  availableFrom: string;
+  availableUntil: string;
+  assignmentGroup?: string;
+  displayGrade?: string;
+  course: string;
+}
 export default function AssignmentEditorPage() {
   const { cid, aid } = useParams();
-  const assignment = db.assignments.find((a:any) => a._id === aid);
+  const isNew = aid === "new";
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { assignments } = useSelector((state: RootState) => state.assignmentReducer);
+  const assignment = (assignments as Assignnment[]).find((a) => a._id === aid)
+  const [title, setTitle] = useState(assignment?.title ?? "");
+  const [description, setDescription] = useState(assignment?.description ?? "");
+  const [points, setPoints] = useState(assignment?.points ?? 100);
+  const [dueDate, setDueDate] = useState(assignment?.dueDate ?? "");
+  const [availableFrom, setAvailableFrom] = useState(assignment?.availableFrom ?? "");
+  const [availableUntil, setAvailableUntil] = useState(assignment?.availableUntil ?? "");
+  const [assignmentGroup, setAssignmentGroup] = useState(assignment?.assignmentGroup ?? "ASSIGNMENT");
+  const [displayGrade, setDisplayGrade] = useState(assignment?.displayGrade ?? "PERCENTAGE");
+  const handleSave = () => {
+    if (isNew) {
+      const newAssignment: Assignnment = {
+        _id: uuidv4(),
+        title,
+        description,
+        points,
+        dueDate,
+        availableFrom,
+        availableUntil,
+        assignmentGroup,
+        displayGrade,
+        course: cid as string
+      };
+      dispatch(addAssignment(newAssignment));
+    } else if (assignment) {
+      const updatedAssignment: Assignnment = {
+        ...assignment,
+        title,
+        description,
+        points,
+        dueDate,
+        availableFrom,
+        availableUntil,
+        assignmentGroup,
+        displayGrade,
+      };
+      dispatch(updateAssignment(updatedAssignment));
+    }
+    router.push(`/Courses/${cid}/Assignments`);
+  };
+  const handleCancel = () => {
+    router.push(`/Courses/${cid}/Assignments`);
+  };
+  useEffect(() => {
+    if (assignment) {
+      setTitle(assignment.title);
+      setDescription(assignment.description);
+      setPoints(assignment.points);
+      setDueDate(assignment.dueDate);
+      setAvailableFrom(assignment.availableFrom);
+      setAvailableUntil(assignment.availableUntil);
+      setAssignmentGroup(assignment.assignmentGroup ?? "ASSIGNMENT");
+      setDisplayGrade(assignment.displayGrade ?? "PERCENTAGE");
+    }
+  }, [assignment]);
   return (
     <div id="wd-assignments-editor" className="container mt-4">
       <form>
@@ -15,7 +90,8 @@ export default function AssignmentEditorPage() {
           <input
             type="text"
             id="wd-name"
-            value={assignment?.title ?? ""}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             className="form-control"/>
         </div>
         <div className="mb-3">
@@ -23,7 +99,8 @@ export default function AssignmentEditorPage() {
           <textarea
             id="wd-description"
             rows={3}
-            defaultValue={"The assignment is available online Submit a link to the landing page of"}
+            defaultValue={description}
+            onChange={(e) => setDescription(e.target.value)}
             className="form-control">
           </textarea>
         </div>
@@ -34,11 +111,13 @@ export default function AssignmentEditorPage() {
               type="number"
               id="wd-points"
               defaultValue={100}
+              onChange={(e) => setPoints(parseInt(e.target.value))}
               className="form-control"/>
           </div>
           <div className="col-12 col-md-4 mb-3 mb-md-0">
             <label htmlFor="wd-assignment-grp" className="form-label">Assignment Group</label>
-            <select id="wd-assignment-grp" defaultValue="ASSIGNMENT" className="form-select">
+            <select id="wd-assignment-grp" defaultValue="ASSIGNMENT" className="form-select"
+              onChange={(e) => setAssignmentGroup(e.target.value)}>
               <option value="ASSIGNMENT">Assignment</option>
               <option value="QUIZ">Quiz</option>
               <option value="PROJECT">Project</option>
@@ -46,7 +125,8 @@ export default function AssignmentEditorPage() {
           </div>
           <div className="col-12 col-md-4">
             <label htmlFor="wd-display-grd" className="form-label">Display Grade</label>
-            <select id="wd-display-grd" defaultValue="PERCENTAGE" className="form-select">
+            <select id="wd-display-grd" defaultValue="PERCENTAGE" className="form-select"
+              onChange={(e) => setDisplayGrade(e.target.value)}>
               <option value="PERCENTAGE">Percentage</option>
               <option value="TOTAL MARKS">Total Marks</option>
               <option value="GPA">GPA</option>
@@ -92,23 +172,26 @@ export default function AssignmentEditorPage() {
           </div>
           <div className="row">
             <div className="col-12 col-md-4 mb-3 mb-md-0">
-              <label htmlFor="wd-text-fields-due" className="form-label">Due</label>
-              <input type="datetime-local" id="wd-text-fields-due" className="form-control" defaultValue='2024-05-06T11:59'/>
+              <label htmlFor="wd-text-fields-due" className="form-label">Due Date</label>
+              <input type="datetime-local" id="wd-text-fields-due" className="form-control" value={dueDate}
+              onChange={(e) => {setDueDate(e.target.value); e.target.blur()}}/>
             </div>
             <div className="col-12 col-md-4 mb-3 mb-md-0">
               <label htmlFor="wd-text-fields-available-from" className="form-label">Available from</label>
-              <input type="datetime-local" id="wd-text-fields-available-from" className="form-control" defaultValue='2024-05-15T11:59' />
+              <input type="datetime-local" id="wd-text-fields-available-from" className="form-control" value={availableFrom} 
+              onChange={(e) => {setAvailableFrom(e.target.value); e.target.blur()}}/>
             </div>
             <div className="col-12 col-md-4">
-              <label htmlFor="wd-text-fields-until" className="form-label">Until</label>
-              <input type="date" id="wd-text-fields-until" className="form-control" />
+              <label htmlFor="wd-text-fields-until" className="form-label">Available Until</label>
+              <input type="date" id="wd-text-fields-until" className="form-control" value={availableUntil}
+               onChange={(e) => {setAvailableUntil(e.target.value); e.target.blur()}}/>
             </div>
           </div>
         </div>
         <hr />
          <div className="d-flex flex-column flex-md-row justify-content-end">
-          <a className="btn btn-secondary me-md-2 mb-2 mb-md-0" href={`/Courses/${cid}/Assignments`}>Cancel</a>
-          <a className="btn btn-danger me-md-2 mb-2 mb-md-0" href={`/Courses/${cid}/Assignments`}>Save</a>
+          <a className="btn btn-secondary me-md-2 mb-2 mb-md-0" onClick={handleCancel}>Cancel</a>
+          <a className="btn btn-danger me-md-2 mb-2 mb-md-0" onClick={handleSave}>Save</a>
         </div>
         </form>
     </div>

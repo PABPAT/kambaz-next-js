@@ -88,5 +88,17 @@
     "description": "This course explores the complex relationships and diplomatic interactions among the different races of Middle-earth: Elves, Men, Dwarves, and Wizards. Topics include the study of historical alliances, conflicts, and the role of leadership and wisdom in maintaining peace. Students will engage in discussions and case studies on key events in Middle-earth's history, such as the Council of Elrond and the War of the Ring, to understand the principles of diplomacy and conflict resolution in a multi-species context.",
     "author": "654f9ec2ea7ead465908d1e3",
     "image": "/images/wizardsElvesMen.jpg"
+  },
+  {
+    "_id": "RS109",
+  "name": "Dragons, Bureaucrats, and Time-Traveling Hobbits: A Study in Magical Governance Gone Wrong",
+  "number": "ARC999",
+  "startDate": "4099-09-01",
+  "endDate": "4100-02-29",
+  "department": "Chronomagical Political Chaos Studies",
+  "credits": 13,
+  "description": "Dive headfirst into the tangled mess of interdimensional politics where dragons draft tax laws, elves run black-market trade unions, and hobbits accidentally invent time travel. This course investigates how mythical governments collapse under the weight of bad decisions, infinite prophecies, and overpaid oracles. Students will attend weekly crisis simulations—such as preventing the Ministry of Mystical Paperwork from declaring war on itself—and conduct field studies in the ruins of the Seventh Age. Expect unexpected assignments, spontaneous time loops, and at least one mandatory group chant to stabilize reality. By the end, survivors—er, students—will understand the delicate balance between magic, chaos, and extremely questionable leadership.",
+  "author": "7ff4a88bdeadb33f5a000001",
+  "image": "/images/Dragon.png"
   }
 ]
