@@ -19,7 +19,7 @@ export default function Assignments() {
   const onCreateAssignmentForCourse = async () => {
     if (!cid) return;
     const newAssignment = { title: assignmentTitle, course: cid };
-    const assignment = await client.createAssignmentForCourse(cid, newAssignment);
+    const assignment = await client.createAssignmentForCourse(cid as string, newAssignment);
     dispatch(setAssignment([...assignments, assignment]));
   };
   const fetchAssignments = async () => {
