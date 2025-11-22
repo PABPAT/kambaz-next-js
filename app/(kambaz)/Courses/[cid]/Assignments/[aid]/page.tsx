@@ -173,17 +173,17 @@ export default function AssignmentEditorPage() {
           <div className="row">
             <div className="col-12 col-md-4 mb-3 mb-md-0">
               <label htmlFor="wd-text-fields-due" className="form-label">Due Date</label>
-              <input type="datetime-local" id="wd-text-fields-due" className="form-control" value={dueDate}
+              <input type="datetime-local" id="wd-text-fields-due" className="form-control" value={dueDate||""}
               onChange={(e) => {setDueDate(e.target.value); e.target.blur()}}/>
             </div>
             <div className="col-12 col-md-4 mb-3 mb-md-0">
               <label htmlFor="wd-text-fields-available-from" className="form-label">Available from</label>
-              <input type="datetime-local" id="wd-text-fields-available-from" className="form-control" value={availableFrom} 
+              <input type="datetime-local" id="wd-text-fields-available-from" className="form-control" value={availableFrom||""} 
               onChange={(e) => {setAvailableFrom(e.target.value); e.target.blur()}}/>
             </div>
             <div className="col-12 col-md-4">
               <label htmlFor="wd-text-fields-until" className="form-label">Available Until</label>
-              <input type="date" id="wd-text-fields-until" className="form-control" value={availableUntil}
+              <input type="date" id="wd-text-fields-until" className="form-control" value={availableUntil||""}
                onChange={(e) => {setAvailableUntil(e.target.value); e.target.blur()}}/>
             </div>
           </div>

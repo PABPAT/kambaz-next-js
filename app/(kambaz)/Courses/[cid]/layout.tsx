@@ -15,7 +15,7 @@ export default function CoursesLayout({ children }: { children: ReactNode }) {
   <div id="wd-courses">
     <h2 className="text-danger">
         <FaAlignJustify className="me-4 fs-4 mb-1" onClick={() => setIsSideBarOpen(!isSideBarOpen)} style={{cursor: 'pointer'}}/>
-        <Breadcrumb course={course} /></h2> <hr />
+         <Breadcrumb course={course} /></h2> <hr />
       <div className="d-flex">
         {isSideBarOpen &&
         <div className="d-none d-md-block">

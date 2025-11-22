@@ -6,13 +6,38 @@ import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { FaRegEdit, FaTrash } from "react-icons/fa";
 import { useParams, useRouter } from "next/navigation";
-import { deleteAssignment } from "./reducer";
+import { addAssignment, deleteAssignment, updateAssignment, editAssignment, setAssignment  } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
+import * as client from "../../client";
+import { useEffect, useState } from "react";
 export default function Assignments() {
   const { cid } = useParams();
   const router = useRouter();
   const dispatch = useDispatch();
+  const [assignmentTitle, setAssignmentTitle] = useState("");
+  const onCreateAssignmentForCourse = async () => {
+    if (!cid) return;
+    const newAssignment = { title: assignmentTitle, course: cid };
+    const assignment = await client.createAssignmentForCourse(cid, newAssignment);
+    dispatch(setAssignment([...assignments, assignment]));
+  };
+  const fetchAssignments = async () => {
+    const assignments = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignment(assignments));
+  };
+  const onDeleteAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    dispatch(setAssignment(assignments.filter((a: any) => a._id !== assignmentId)))
+  };
+  /*const onUpdateAssignment = async (assignment: any) => {
+      await client.updateAssignment(assignment);
+      const newAssignments = assignments.map((a: any) => a._id === assignment._id ? assignment : a);
+      dispatch(setAssignment(newAssignments));
+  };*/
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
   const { assignments } = useSelector((state: RootState) => state.assignmentReducer);
 
   const deleteAssignmentById = (id: string) => {
@@ -40,7 +65,7 @@ export default function Assignments() {
           <button id="wd-add-assignment-group" className="btn btn-secondary me-2">
             + Group
           </button>
-          <button id="wd-add-assignment" className="btn btn-danger" onClick={() => router.push(`/Courses/${cid}/Assignments/new`)}>
+          <button id="wd-add-assignment" className="btn btn-danger" onClick={onCreateAssignmentForCourse}>
             + Assignment
           </button>
         </div>
@@ -59,9 +84,7 @@ export default function Assignments() {
             </div>
           </div>
         </ListGroupItem>
-        {assignments
-          .filter((assignment: any) => assignment.course === cid)
-          .map((assignment: any) => (
+        {assignments.map((assignment: any) => (
             <ListGroupItem 
               key={assignment._id} 
               className="d-flex justify-content-between align-items-start p-3"
@@ -83,12 +106,12 @@ export default function Assignments() {
                   </div>
               </div>
               <div className="d-flex align-items-center">
-                <FaRegEdit className="me-3 mt-1 text-success" 
-                style = {{cursor: "pointer"}}
-                onClick={() => router.push(`/Courses/${cid}/Assignments/${assignment._id}`)}/>
+              <FaRegEdit className="me-3 mt-1 text-success"
+                style={{ cursor: "pointer" }}
+                onClick={() => router.push(`/Courses/${cid}/Assignments/${assignment._id}`)} />
                 <FaTrash className="me-3 mt-1 text-danger"
                 style = {{cursor: "pointer"}}
-                onClick={() => deleteAssignmentById(assignment._id)}/>
+                onClick={(assignmentId) => onDeleteAssignment(assignment._id)}/>
               <div className="d-flex align-items-center">
                 <GreenCheckmark />
                 <IoEllipsisVertical className="ms-2" />

@@ -1,14 +1,10 @@
 "use client";
 import { AiOutlineDashboard } from "react-icons/ai";
-import { SlCalender } from "react-icons/sl";
 import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
 import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { MdAccountCircle } from "react-icons/md";
-import { FiHelpCircle } from "react-icons/fi";
-import { LuArrowLeftToLine } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 export default function KambazNavigation() {
   const pathname = usePathname();
