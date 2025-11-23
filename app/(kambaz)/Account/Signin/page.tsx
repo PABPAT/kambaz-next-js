@@ -31,4 +31,6 @@ export default function Signin() {
       <Button onClick={signin} id="wd-signin-btn" className="wd-signup-btn btn btn-primary mb-2 w-100" > Sign in </Button>
       <Link id="wd-signup-link" href="/Account/Signup"> Sign up </Link>
     </div>
-);}
+  );
+}
+console.log("HTTP_SERVER =", process.env.NEXT_PUBLIC_HTTP_SERVER);
