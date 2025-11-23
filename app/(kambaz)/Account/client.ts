@@ -1,5 +1,8 @@
 import axios from "axios";
-const axiosWithCredentials = axios.create({ withCredentials: true });
+const axiosWithCredentials = axios.create({
+    withCredentials: true,
+    timeout: 10000,
+ });
 export const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER || "";
 console.log("Loaded HTTP SERVER=", HTTP_SERVER);
 export const USERS_API = `${HTTP_SERVER}/api/users`;
