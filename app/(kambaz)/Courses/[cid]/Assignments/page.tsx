@@ -30,11 +30,11 @@ export default function Assignments() {
     await client.deleteAssignment(assignmentId);
     dispatch(setAssignment(assignments.filter((a: any) => a._id !== assignmentId)))
   };
-  /*const onUpdateAssignment = async (assignment: any) => {
+  const onUpdateAssignment = async (assignment: any) => {
       await client.updateAssignment(assignment);
       const newAssignments = assignments.map((a: any) => a._id === assignment._id ? assignment : a);
       dispatch(setAssignment(newAssignments));
-  };*/
+  };
   useEffect(() => {
     fetchAssignments();
   }, []);
@@ -111,7 +111,7 @@ export default function Assignments() {
                 onClick={() => router.push(`/Courses/${cid}/Assignments/${assignment._id}`)} />
                 <FaTrash className="me-3 mt-1 text-danger"
                 style = {{cursor: "pointer"}}
-                onClick={(assignmentId) => onDeleteAssignment(assignment._id)}/>
+                onClick={() => onDeleteAssignment(assignment._id)}/>
               <div className="d-flex align-items-center">
                 <GreenCheckmark />
                 <IoEllipsisVertical className="ms-2" />
