@@ -102,7 +102,7 @@ export default function AssignmentEditorPage() {
           <textarea
             id="wd-description"
             rows={3}
-            defaultValue={description}
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="form-control">
           </textarea>
@@ -113,13 +113,13 @@ export default function AssignmentEditorPage() {
             <input
               type="number"
               id="wd-points"
-              defaultValue={100}
+              value={points}
               onChange={(e) => setPoints(parseInt(e.target.value))}
               className="form-control"/>
           </div>
           <div className="col-12 col-md-4 mb-3 mb-md-0">
             <label htmlFor="wd-assignment-grp" className="form-label">Assignment Group</label>
-            <select id="wd-assignment-grp" defaultValue="ASSIGNMENT" className="form-select"
+            <select id="wd-assignment-grp" value={assignmentGroup} className="form-select"
               onChange={(e) => setAssignmentGroup(e.target.value)}>
               <option value="ASSIGNMENT">Assignment</option>
               <option value="QUIZ">Quiz</option>
@@ -128,7 +128,7 @@ export default function AssignmentEditorPage() {
           </div>
           <div className="col-12 col-md-4">
             <label htmlFor="wd-display-grd" className="form-label">Display Grade</label>
-            <select id="wd-display-grd" defaultValue="PERCENTAGE" className="form-select"
+            <select id="wd-display-grd" value={displayGrade} className="form-select"
               onChange={(e) => setDisplayGrade(e.target.value)}>
               <option value="PERCENTAGE">Percentage</option>
               <option value="TOTAL MARKS">Total Marks</option>
@@ -140,7 +140,7 @@ export default function AssignmentEditorPage() {
         <div className="mb-3 border p-3 rounded">
           <select
             id="wd-submission-type"
-            defaultValue="ONLINE"
+            value="ONLINE"
             className="form-select mb-3">
             <option value="ONLINE">Online</option>
             <option value="OFFLINE">Offline</option>
