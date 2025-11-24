@@ -8,7 +8,8 @@ import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { addAssignment, updateAssignment} from "../reducer";
 import { useSelector } from 'react-redux';
-import { RootState} from '../../../../store';
+import { RootState } from '../../../../store';
+import * as client from "../../../client";
 interface Assignnment {
   _id: string;
   title: string;
@@ -36,7 +37,7 @@ export default function AssignmentEditorPage() {
   const [availableUntil, setAvailableUntil] = useState(assignment?.availableUntil ?? "");
   const [assignmentGroup, setAssignmentGroup] = useState(assignment?.assignmentGroup ?? "ASSIGNMENT");
   const [displayGrade, setDisplayGrade] = useState(assignment?.displayGrade ?? "PERCENTAGE");
-  const handleSave = () => {
+  const handleSave = async () => {
     if (isNew) {
       const newAssignment: Assignnment = {
         _id: uuidv4(),
@@ -50,6 +51,7 @@ export default function AssignmentEditorPage() {
         displayGrade,
         course: cid as string
       };
+      await client.createAssignmentForCourse(cid as string, newAssignment);
       dispatch(addAssignment(newAssignment));
     } else if (assignment) {
       const updatedAssignment: Assignnment = {
@@ -63,6 +65,7 @@ export default function AssignmentEditorPage() {
         assignmentGroup,
         displayGrade,
       };
+      await client.updateAssignment(updatedAssignment);
       dispatch(updateAssignment(updatedAssignment));
     }
     router.push(`/Courses/${cid}/Assignments`);
