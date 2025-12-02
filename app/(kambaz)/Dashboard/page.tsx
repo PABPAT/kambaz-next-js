@@ -81,7 +81,6 @@ export default function Dashboard() {
       console.error(error);
     }
   };
-
   useEffect(() => {
     fetchCourses();
     fetchEnrollments();
@@ -99,7 +98,6 @@ export default function Dashboard() {
   const enrolledCourseIds = enrollments
     .filter((e: any) => e.user === currentUser._id)
     .map((e: any) => e.course);
-
   const enrolledCourses = courses.filter((course: any) =>
     enrolledCourseIds.includes(course._id)
   );
