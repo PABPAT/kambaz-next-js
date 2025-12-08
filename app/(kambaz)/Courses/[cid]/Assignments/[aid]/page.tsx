@@ -29,14 +29,15 @@ export default function AssignmentEditorPage() {
   const dispatch = useDispatch();
   const { assignments } = useSelector((state: RootState) => state.assignmentReducer);
   const assignment = (assignments as Assignnment[]).find((a) => a._id === aid)
-  const [title, setTitle] = useState(assignment?.title ?? "");
-  const [description, setDescription] = useState(assignment?.description ?? "");
-  const [points, setPoints] = useState(assignment?.points ?? 100);
-  const [dueDate, setDueDate] = useState(assignment?.dueDate ?? "");
-  const [availableFrom, setAvailableFrom] = useState(assignment?.availableFrom ?? "");
-  const [availableUntil, setAvailableUntil] = useState(assignment?.availableUntil ?? "");
-  const [assignmentGroup, setAssignmentGroup] = useState(assignment?.assignmentGroup ?? "ASSIGNMENT");
-  const [displayGrade, setDisplayGrade] = useState(assignment?.displayGrade ?? "PERCENTAGE");
+  const [title, setTitle] = useState(assignment?.title || "");
+  const [description, setDescription] = useState(assignment?.description || "");
+  const [points, setPoints] = useState(assignment?.points || 100);
+  const [dueDate, setDueDate] = useState(assignment?.dueDate || "");
+  const [availableFrom, setAvailableFrom] = useState(assignment?.availableFrom || "");
+  const [availableUntil, setAvailableUntil] = useState(assignment?.availableUntil || "");
+  const [assignmentGroup, setAssignmentGroup] = useState(assignment?.assignmentGroup || "ASSIGNMENT");
+  const [displayGrade, setDisplayGrade] = useState(assignment?.displayGrade || "PERCENTAGE");
+  const [submissionType, setSubmissionType] = useState("ONLINE");
   const handleSave = async () => {
     if (isNew) {
       const newAssignment: Assignnment = {
@@ -75,14 +76,14 @@ export default function AssignmentEditorPage() {
   };
   useEffect(() => {
     if (assignment) {
-      setTitle(assignment.title);
-      setDescription(assignment.description);
-      setPoints(assignment.points);
-      setDueDate(assignment.dueDate);
-      setAvailableFrom(assignment.availableFrom);
-      setAvailableUntil(assignment.availableUntil);
-      setAssignmentGroup(assignment.assignmentGroup ?? "ASSIGNMENT");
-      setDisplayGrade(assignment.displayGrade ?? "PERCENTAGE");
+      setTitle(assignment.title || "");
+      setDescription(assignment.description || "");
+      setPoints(assignment.points || 100);
+      setDueDate(assignment.dueDate || "");
+      setAvailableFrom(assignment.availableFrom || "");
+      setAvailableUntil(assignment.availableUntil || "");
+      setAssignmentGroup(assignment.assignmentGroup || "ASSIGNMENT");
+      setDisplayGrade(assignment.displayGrade || "PERCENTAGE");
     }
   }, [assignment]);
   return (
@@ -140,7 +141,8 @@ export default function AssignmentEditorPage() {
         <div className="mb-3 border p-3 rounded">
           <select
             id="wd-submission-type"
-            value="ONLINE"
+            value={submissionType}
+            onChange={(e) => setSubmissionType(e.target.value)}
             className="form-select mb-3">
             <option value="ONLINE">Online</option>
             <option value="OFFLINE">Offline</option>
@@ -176,17 +178,17 @@ export default function AssignmentEditorPage() {
           <div className="row">
             <div className="col-12 col-md-4 mb-3 mb-md-0">
               <label htmlFor="wd-text-fields-due" className="form-label">Due Date</label>
-              <input type="datetime-local" id="wd-text-fields-due" className="form-control" value={dueDate||""}
+              <input type="datetime-local" id="wd-text-fields-due" className="form-control" value={dueDate}
               onChange={(e) => {setDueDate(e.target.value); e.target.blur()}}/>
             </div>
             <div className="col-12 col-md-4 mb-3 mb-md-0">
               <label htmlFor="wd-text-fields-available-from" className="form-label">Available from</label>
-              <input type="datetime-local" id="wd-text-fields-available-from" className="form-control" value={availableFrom||""} 
+              <input type="datetime-local" id="wd-text-fields-available-from" className="form-control" value={availableFrom} 
               onChange={(e) => {setAvailableFrom(e.target.value); e.target.blur()}}/>
             </div>
             <div className="col-12 col-md-4">
               <label htmlFor="wd-text-fields-until" className="form-label">Available Until</label>
-              <input type="date" id="wd-text-fields-until" className="form-control" value={availableUntil||""}
+              <input type="date" id="wd-text-fields-until" className="form-control" value={availableUntil}
                onChange={(e) => {setAvailableUntil(e.target.value); e.target.blur()}}/>
             </div>
           </div>
